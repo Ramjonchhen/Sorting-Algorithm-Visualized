@@ -12,10 +12,7 @@ int no_of_elements;
     int xBlockEnd[9];
     int yBlockEnd[9];
     int yBase=300;
-
-    int color[9]={0,1,2,3,4,5,6,7,8};
-
-
+    int color[9]={0,1,2,3,4,5,6,9,10};
     char value[2];
 
 void display_blocks(int values[])
@@ -40,8 +37,6 @@ void display_blocks(int values[])
     }
 
 }
-
-
 
 void swap_blocks(int x,int y)
 {
@@ -97,6 +92,7 @@ int main()
         cin>>values[i];
     }
     display_blocks(values);
+                outtextxy(xBlockStarting[0],yBlockEnd[0]+20,"swap");
 
     delay(200);
     // performing the bubble sort
@@ -105,16 +101,25 @@ int main()
     {
         for(int j=0; j<no_of_elements-1-i; j++)
         {
+            outtextxy(xBlockStarting[j],yBlockEnd[j]+20,"swap");
            if(values[j]>values[j+1])
            {
+               // swapping the values of the array
                int calltemp=j;
                swap_blocks(calltemp,calltemp+1);
                temp=values[j];
                values[j]=values[j+1];
                values[j+1]=temp;
+               // swapping the values of the color to maintain the color consistency
+               int temp_color;
+               temp_color=color[j];
+               color[j]=color[j+1];
+               color[j+1]=temp_color;
                display_blocks(values);
            }
         }
+        color[no_of_elements-i-1]=8;
+           display_blocks(values);
     }
 getch();
     return 0;
