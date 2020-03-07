@@ -39,7 +39,7 @@ void display_blocks(int values[])
 
 }
 
-void swap_blocks(int x,int y,int balance)
+void swap_blocks(int x,int y)
 {
     int move_block[9];
     cleardevice();
@@ -55,6 +55,7 @@ void swap_blocks(int x,int y,int balance)
             move_block[inc]=0;
         }
     }
+    // loop for animating that swapping two blocks is moving
   for(int k=0; k<=15; k++)
   {
       cleardevice();
@@ -75,24 +76,22 @@ void swap_blocks(int x,int y,int balance)
     }
 
     // displaying the balance variable
-    line(xBlockStarting[balance],305,xBlockStarting[balance],320);
-            line(xBlockEnd[balance],305,xBlockEnd[balance],320);
-            line( ((xBlockStarting[balance]+xBlockEnd[balance])/2),320,((xBlockStarting[balance]+xBlockEnd[balance])/2),335 );
-            line(xBlockEnd[balance],320,xBlockStarting[balance],320);
+   line(xBlockStarting[x],yBase+5,xBlockStarting[x],yBase+20);
+            line(xBlockEnd[x],yBase+5,xBlockEnd[x],yBase+20);
+            line( ((xBlockStarting[x]+xBlockEnd[x])/2),yBase+20,((xBlockStarting[x]+xBlockEnd[x])/2),yBase+35 );
+            line(xBlockEnd[x],yBase+20,xBlockStarting[x],yBase+20);
 
-            // drawing the 2nd Block traju
-            line(xBlockStarting[balance+1],305,xBlockStarting[balance+1],320);
-            line(xBlockEnd[balance+1],305,xBlockEnd[balance+1],320);
-            line( ((xBlockStarting[balance+1]+xBlockEnd[balance+1])/2),320,((xBlockStarting[balance+1]+xBlockEnd[balance+1])/2),335 );
-            line(xBlockEnd[balance+1],320,xBlockStarting[balance+1],320);
+            // drawing the 2nd Block traxu
+            line(xBlockStarting[x+1],yBase+5,xBlockStarting[x+1],yBase+20);
+            line(xBlockEnd[x+1],yBase+5,xBlockEnd[x+1],yBase+20);
+            line( ((xBlockStarting[x+1]+xBlockEnd[x+1])/2),yBase+20,((xBlockStarting[x+1]+xBlockEnd[x+1])/2),yBase+35 );
+            line(xBlockEnd[x+1],yBase+20,xBlockStarting[x+1],yBase+20);
 
-            line(((xBlockStarting[balance+1]+xBlockEnd[balance+1])/2),335,((xBlockStarting[balance]+xBlockEnd[balance])/2),335);
+            line(((xBlockStarting[x+1]+xBlockEnd[x+1])/2),yBase+35,((xBlockStarting[x]+xBlockEnd[x])/2),yBase+35);
 
     delay(150);
   }
 }
-
-
 
 int main()
 {
@@ -115,8 +114,8 @@ int main()
            if(values[j]>values[j+1])
            {
                // swapping the values of the array
-               int calltemp=j;
-               swap_blocks(calltemp,calltemp+1,j);
+
+               swap_blocks(j,j+1);
                temp=values[j];
                values[j]=values[j+1];
                values[j+1]=temp;
@@ -129,41 +128,23 @@ int main()
            }
            // if nothing to swap displaying the message
         else{
-                // display the  rectangular blocks
-    cleardevice();
-    xBlockStarting[0]=70;
-
-     for(int i=0; i<no_of_elements; i++)
-    {
-        yBlockEnd[i]=yBase;
-            int k=i;
-        yBlockStarting[i]=yBase-(20*values[i]);
-        xBlockEnd[i]=xBlockStarting[i]+40;
-        rectangle(xBlockStarting[i],yBlockStarting[i],xBlockEnd[i],yBlockEnd[i]);
-        setfillstyle(1,color[i]);
-            floodfill(xBlockStarting[i]+10,yBlockEnd[i]-10,15);
-            // for spacing between the blocks we have choosen
-            // the spacing betn the blocs as 10
-            sprintf(value,"%d",values[i]);
-            outtextxy(xBlockStarting[i]+15,yBlockEnd[i]-20,value);
-        xBlockStarting[k+1]=xBlockEnd[i]+10;
-    }
-    // drawing the 1st block traju
+               display_blocks(values);
+     // drawing the 1st block traju
             // drawing the line from the starting of 1st block to some narrow
-            line(xBlockStarting[j],305,xBlockStarting[j],320);
-            line(xBlockEnd[j],305,xBlockEnd[j],320);
-            line( ((xBlockStarting[j]+xBlockEnd[j])/2),320,((xBlockStarting[j]+xBlockEnd[j])/2),335 );
-            line(xBlockEnd[j],320,xBlockStarting[j],320);
+            line(xBlockStarting[j],yBase+5,xBlockStarting[j],yBase+20);
+            line(xBlockEnd[j],yBase+5,xBlockEnd[j],yBase+20);
+            line( ((xBlockStarting[j]+xBlockEnd[j])/2),yBase+20,((xBlockStarting[j]+xBlockEnd[j])/2),yBase+35 );
+            line(xBlockEnd[j],yBase+20,xBlockStarting[j],yBase+20);
 
             // drawing the 2nd Block traju
-            line(xBlockStarting[j+1],305,xBlockStarting[j+1],320);
-            line(xBlockEnd[j+1],305,xBlockEnd[j+1],320);
-            line( ((xBlockStarting[j+1]+xBlockEnd[j+1])/2),320,((xBlockStarting[j+1]+xBlockEnd[j+1])/2),335 );
-            line(xBlockEnd[j+1],320,xBlockStarting[j+1],320);
+            line(xBlockStarting[j+1],yBase+5,xBlockStarting[j+1],yBase+20);
+            line(xBlockEnd[j+1],yBase+5,xBlockEnd[j+1],yBase+20);
+            line( ((xBlockStarting[j+1]+xBlockEnd[j+1])/2),yBase+20,((xBlockStarting[j+1]+xBlockEnd[j+1])/2),yBase+35 );
+            line(xBlockEnd[j+1],yBase+20,xBlockStarting[j+1],yBase+20);
 
-            line(((xBlockStarting[j+1]+xBlockEnd[j+1])/2),335,((xBlockStarting[j]+xBlockEnd[j])/2),335);
-            outtextxy(200,340,"Can't swap");
-            delay(2500);
+            line(((xBlockStarting[j+1]+xBlockEnd[j+1])/2),yBase+35,((xBlockStarting[j]+xBlockEnd[j])/2),yBase+35);
+            outtextxy((xBlockStarting[j+1]+xBlockEnd[j+1])/2,yBase+40,"Can't swap");
+            delay(2000);
 
         }
         }
