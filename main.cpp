@@ -1,3 +1,5 @@
+// selection sort animation try
+
 #include <iostream>
 #include <graphics.h>
 #include <stdio.h>
@@ -16,6 +18,7 @@ int no_of_elements;
     int color[9]={0,1,2,3,4,5,6,9,10};
     char value[2];
 
+// function to display the blocks inttially
 void display_blocks(int values[])
 {
     cleardevice();
@@ -38,6 +41,7 @@ void display_blocks(int values[])
     }
 
 }
+
 
 void swap_blocks(int x,int y)
 {
@@ -74,88 +78,117 @@ void swap_blocks(int x,int y)
             outtextxy(xBlockStarting[i]+15,yBlockEnd[i]-20-move_block[i]*i,value);
         xBlockStarting[j+1]=xBlockEnd[i]+10;
     }
-
-    // displaying the balance variable
-   line(xBlockStarting[x],yBase+5,xBlockStarting[x],yBase+20);
-            line(xBlockEnd[x],yBase+5,xBlockEnd[x],yBase+20);
-            line( ((xBlockStarting[x]+xBlockEnd[x])/2),yBase+20,((xBlockStarting[x]+xBlockEnd[x])/2),yBase+35 );
-            line(xBlockEnd[x],yBase+20,xBlockStarting[x],yBase+20);
-
-            // drawing the 2nd Block traxu
-            line(xBlockStarting[x+1],yBase+5,xBlockStarting[x+1],yBase+20);
-            line(xBlockEnd[x+1],yBase+5,xBlockEnd[x+1],yBase+20);
-            line( ((xBlockStarting[x+1]+xBlockEnd[x+1])/2),yBase+20,((xBlockStarting[x+1]+xBlockEnd[x+1])/2),yBase+35 );
-            line(xBlockEnd[x+1],yBase+20,xBlockStarting[x+1],yBase+20);
-
-            line(((xBlockStarting[x+1]+xBlockEnd[x+1])/2),yBase+35,((xBlockStarting[x]+xBlockEnd[x])/2),yBase+35);
-
     delay(150);
   }
 }
 
+void move_block(int block_no,int direction)
+{
+    int move_block[9];
+    cleardevice();
+    for (int inc=0; inc<9; inc++)
+    {
+        int temp=inc;
+        if (temp==block_no)
+        {
+            move_block[inc]=1;
+        }
+
+        else{
+            move_block[inc]=0;
+        }
+    }
+    // loop for animating that swapping two blocks is moving
+  for(int k=0; k<=20; k++)
+  {
+      cleardevice();
+      for(int i=0; i<no_of_elements; i++)
+    {
+        yBlockEnd[i]=yBase+move_block[i]*3*k*direction;
+            int j=i;
+        yBlockStarting[i]=yBlockEnd[i]-(20*values[i]);
+        xBlockEnd[i]=xBlockStarting[i]+40;
+        rectangle(xBlockStarting[i],yBlockStarting[i],xBlockEnd[i],yBlockEnd[i]);
+        setfillstyle(1,color[i]);
+            floodfill(xBlockStarting[i]+10,yBlockEnd[i]-10,15);
+            // for spacing between the blocks we have choosen
+            // the spacing betn the blocs as 10
+            sprintf(value,"%d",values[i]);
+            outtextxy(xBlockStarting[i]+15,yBlockEnd[i]-20-move_block[i]*i,value);
+        xBlockStarting[j+1]=xBlockEnd[i]+10;
+    }
+    delay(60);
+  }
+}
+
+
+
 int main()
 {
-    initwindow(1000,1000,"graphics");
+     int gd=DETECT,gm;
+     initgraph(&gd,&gm,"C:TURBOC3\\BGI");
+     int page=0;
+
+
+     int minimum_number,minimum_location;
     cout<<"Enter the no of elements in the array: ";
     cin>>no_of_elements;
     for(int i=0; i<no_of_elements; i++)
     {
         cin>>values[i];
     }
-    display_blocks(values);
-
-    delay(600);
-    // performing the bubble sort
-    int temp;
-    for(int i=0; i<no_of_elements; i++)
+    while(1)
     {
-        for(int j=0; j<no_of_elements-1-i; j++)
+        setactivepage(page);
+        setvisualpage(1-page);
+        cleardevice();
+
+        display_blocks(values);
+
+    // now doing the sort
+    for(int i=0; i<no_of_elements-1; i++ )
+    {
+        minimum_number=values[i];
+        minimum_location=i;
+        // moving the blocks form ith block to minimum
+        for(int j=i; j<no_of_elements; j++)
         {
-           if(values[j]>values[j+1])
-           {
-               // swapping the values of the array
-
-               swap_blocks(j,j+1);
-               temp=values[j];
-               values[j]=values[j+1];
-               values[j+1]=temp;
-               // swapping the values of the color to maintain the color consistency
-               int temp_color;
-               temp_color=color[j];
-               color[j]=color[j+1];
-               color[j+1]=temp_color;
-               display_blocks(values);
-           }
-           // if nothing to swap displaying the message
-        else{
-               display_blocks(values);
-     // drawing the 1st block traju
-            // drawing the line from the starting of 1st block to some narrow
-            line(xBlockStarting[j],yBase+5,xBlockStarting[j],yBase+20);
-            line(xBlockEnd[j],yBase+5,xBlockEnd[j],yBase+20);
-            line( ((xBlockStarting[j]+xBlockEnd[j])/2),yBase+20,((xBlockStarting[j]+xBlockEnd[j])/2),yBase+35 );
-            line(xBlockEnd[j],yBase+20,xBlockStarting[j],yBase+20);
-
-            // drawing the 2nd Block traju
-            line(xBlockStarting[j+1],yBase+5,xBlockStarting[j+1],yBase+20);
-            line(xBlockEnd[j+1],yBase+5,xBlockEnd[j+1],yBase+20);
-            line( ((xBlockStarting[j+1]+xBlockEnd[j+1])/2),yBase+20,((xBlockStarting[j+1]+xBlockEnd[j+1])/2),yBase+35 );
-            line(xBlockEnd[j+1],yBase+20,xBlockStarting[j+1],yBase+20);
-
-            line(((xBlockStarting[j+1]+xBlockEnd[j+1])/2),yBase+35,((xBlockStarting[j]+xBlockEnd[j])/2),yBase+35);
-            outtextxy((xBlockStarting[j+1]+xBlockEnd[j+1])/2,yBase+40,"Can't swap");
-            delay(2000);
-
-        }
+            move_block(j,1);
         }
 
-        // adding the grey color to the sorted blocks
-        color[no_of_elements-i-1]=8;
-           display_blocks(values);
+        // checking the minimum
+        for(int inner=i; inner<no_of_elements; inner++)
+        {
+            if( values[inner]< minimum_number )
+            {
+                minimum_number=values[inner];
+                minimum_location=inner;
+            }
+        }
+
+        // displaying the minimum
+
+        display_blocks(values);
+        outtextxy( xBlockStarting[minimum_location],yBlockEnd[minimum_location]+5,"MIN");
+                  getch();
+
+        if(minimum_location!=i)
+        {
+            swap_blocks(i,minimum_location);
+        }
+        display_blocks(values);
+
+        int temp=values[i];
+        values[i]=values[minimum_location];
+        values[minimum_location]=temp;
+
+        display_blocks(values);
+
+        page=1-page;
     }
 
+    }
 
-
-getch();
+    getch();
     return 0;
 }
