@@ -22,9 +22,9 @@ This project visualizes two sorting algorithms **Bubble Sort** and **Selection S
 ---
 ### YouTube Video of the project
 
-[YouTube Video Link](https://www.youtube.com/watch?v=i9bqeo3JYeg&t=1s){:target="_blank"}
+[YouTube Video Link](https://www.youtube.com/watch?v=i9bqeo3JYeg&t=1s)
 
 ---
 ### Report of the project
 
-[Report PDF File Link](https://github.com/Ramjonchhen/Sorting-Algorithm-Visualized/blob/master/final%20report.pdf){:target="_blank"}
+[Report PDF File Link](https://github.com/Ramjonchhen/Sorting-Algorithm-Visualized/blob/master/final%20report.pdf)
